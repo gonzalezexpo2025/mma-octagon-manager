@@ -1,0 +1,64 @@
+digraph ER {
+  graph [rankdir=LR, bgcolor="white", pad=0.4, nodesep=0.7, ranksep=1.6, fontname="Helvetica"];
+  node  [shape=plaintext, fontname="Helvetica", fontsize=11];
+  edge  [fontname="Helvetica", fontsize=10, color="#444444", dir=both];
+
+  categoria_peso [label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#b4121f" COLSPAN="3"><FONT COLOR="white"><B>categoria_peso</B></FONT></TD></TR>
+      <TR><TD PORT="id"><B>PK</B></TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">nombre (UNIQUE)</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">limite_lb</TD><TD ALIGN="LEFT">REAL</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">limite_kg</TD><TD ALIGN="LEFT">REAL</TD></TR>
+    </TABLE>>];
+
+  peleador [label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#b4121f" COLSPAN="3"><FONT COLOR="white"><B>peleador</B></FONT></TD></TR>
+      <TR><TD PORT="id"><B>PK</B></TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">nombre</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">apodo</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">pais</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">fecha_nacimiento</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">altura_cm</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">alcance_cm</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">estilo</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">activo</TD><TD ALIGN="LEFT">INTEGER (0/1)</TD></TR>
+      <TR><TD PORT="cat" BGCOLOR="#fde68a"><B>FK</B></TD><TD ALIGN="LEFT">categoria_id</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+    </TABLE>>];
+
+  evento [label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#b4121f" COLSPAN="3"><FONT COLOR="white"><B>evento</B></FONT></TD></TR>
+      <TR><TD PORT="id"><B>PK</B></TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">nombre</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">fecha</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">sede</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">ciudad</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">pais</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">estado</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+    </TABLE>>];
+
+  pelea [label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#b4121f" COLSPAN="3"><FONT COLOR="white"><B>pelea</B></FONT></TD></TR>
+      <TR><TD PORT="id"><B>PK</B></TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD PORT="ev" BGCOLOR="#fde68a"><B>FK</B></TD><TD ALIGN="LEFT">evento_id</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD PORT="rojo" BGCOLOR="#fde68a"><B>FK</B></TD><TD ALIGN="LEFT">peleador_rojo_id</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD PORT="azul" BGCOLOR="#fde68a"><B>FK</B></TD><TD ALIGN="LEFT">peleador_azul_id</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD PORT="cat" BGCOLOR="#fde68a"><B>FK</B></TD><TD ALIGN="LEFT">categoria_id</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD PORT="gan" BGCOLOR="#fde68a"><B>FK</B></TD><TD ALIGN="LEFT">ganador_id (opcional)</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">rounds</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">es_titulo</TD><TD ALIGN="LEFT">INTEGER (0/1)</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">metodo</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">round_final</TD><TD ALIGN="LEFT">INTEGER</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">tiempo</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+    </TABLE>>];
+
+  categoria_peso:id -> peleador:cat [arrowtail=tee, arrowhead=crow, label="  clasifica (1:N)  "];
+  categoria_peso:id -> pelea:cat    [arrowtail=tee, arrowhead=crow, label="  se disputa en (1:N)  "];
+  evento:id         -> pelea:ev     [arrowtail=tee, arrowhead=crow, label="  contiene (1:N)  "];
+  peleador:id       -> pelea:rojo   [arrowtail=tee, arrowhead=crow, label="  esquina roja (1:N)  ", color="#b4121f"];
+  peleador:id       -> pelea:azul   [arrowtail=tee, arrowhead=crow, label="  esquina azul (1:N)  ", color="#1d4ed8"];
+  peleador:id       -> pelea:gan    [arrowtail=tee, arrowhead=crowodot, label="  gana (1:N, opcional)  ", color="#b8860b"];
+}
