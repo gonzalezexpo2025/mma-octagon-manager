@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Octagon Manager · Gestión de MMA</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥊</text></svg>">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/dashboard"><span class="brand-mark">⬣</span> OCTAGON <b>MANAGER</b></a>
+    <nav id="nav">
+      <a href="#/dashboard" data-view="dashboard">Panel</a>
+      <a href="#/peleadores" data-view="peleadores">Peleadores</a>
+      <a href="#/eventos" data-view="eventos">Eventos</a>
+      <a href="#/peleas" data-view="peleas">Peleas</a>
+      <a href="#/categorias" data-view="categorias">Categorías</a>
+    </nav>
+  </header>
+
+  <main id="view" class="container" aria-live="polite"></main>
+
+  <footer class="footer">Octagon Manager · FastAPI + SQLite · Proyecto del curso</footer>
+
+  <!-- Ventana para formularios (crear / editar) -->
+  <dialog id="modal"><form id="modal-form" method="dialog" novalidate></form></dialog>
+  <!-- Ventana informativa (historial, cartelera) -->
+  <dialog id="info"><div id="info-body"></div></dialog>
+  <!-- Mensajes emergentes -->
+  <div id="toast" role="status"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
